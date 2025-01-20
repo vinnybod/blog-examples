@@ -1,0 +1,27 @@
+bazel_dep(name = "rules_jvm_external", version = "6.6")
+bazel_dep(name = "contrib_rules_jvm", version = "0.27.0")
+bazel_dep(name = "rules_java", version = "8.6.3")
+bazel_dep(name = "rules_oci", version = "2.2.0")
+bazel_dep(name = "aspect_bazel_lib", version = "2.8.1")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    artifacts = [
+        "org.apache.commons:commons-lang3:3.17.0",
+        "com.google.guava:guava:31.0.1-jre",
+        "org.junit.jupiter:junit-jupiter-api:5.7.2",
+        "org.junit.jupiter:junit-jupiter-engine:5.7.2",
+        "org.junit.platform:junit-platform-launcher:1.7.2",
+        "org.junit.platform:junit-platform-reporting:1.7.2",
+    ],
+    lock_file = "//:maven_install.json",
+)
+use_repo(maven, "maven")
+
+oci = use_extension("@rules_oci//oci:extensions.bzl", "oci")
+oci.pull(
+    name = "distroless_java",
+    digest = "sha256:161a1d97d592b3f1919801578c3a47c8e932071168a96267698f4b669c24c76d",
+    image = "gcr.io/distroless/java17",
+)
+use_repo(oci, "distroless_java")

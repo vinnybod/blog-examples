@@ -1,0 +1,29 @@
+load("@contrib_rules_jvm//java:defs.bzl", "java_junit5_test")
+
+# bazel test //test-shards-java:ShardTest
+java_junit5_test(
+    name = "ShardTest",
+    size = "large",
+    srcs = ["src/test/java/com/example/ShardTest.java"],
+    test_class = "com.example.ShardTest",
+    deps = [
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_platform_junit_platform_launcher",
+        "@maven//:org_junit_platform_junit_platform_reporting",
+    ],
+)
+
+# bazel test //test-shards-java:ShardTest5Shards
+java_junit5_test(
+    name = "ShardTest5Shards",
+    srcs = ["src/test/java/com/example/ShardTest.java"],
+    shard_count = 5,
+    test_class = "com.example.ShardTest",
+    deps = [
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_platform_junit_platform_launcher",
+        "@maven//:org_junit_platform_junit_platform_reporting",
+    ],
+)
