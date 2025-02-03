@@ -1,0 +1,44 @@
+load("@aspect_bazel_lib//lib:tar.bzl", "tar")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_load")
+load("//python-multi-arch-with-base-image:transition.bzl", "multi_arch")
+
+# This comes from the example at:
+# https://github.com/bazel-contrib/rules_oci/blob/main/examples/multi_architecture_image/BUILD.bazel
+
+tar(
+    name = "app",
+    srcs = ["test.bash"],
+)
+
+oci_image(
+    name = "image",
+    base = "@ubuntu",
+    cmd = ["python-multi-arch-with-base-image/base-image/test.bash"],
+    entrypoint = ["bash"],
+    tars = [":app"],
+    visibility = ["//visibility:public"],
+)
+
+multi_arch(
+    name = "images",
+    image = ":image",
+    platforms = [
+        "//python-multi-arch-with-base-image:linux_arm64",
+        "//python-multi-arch-with-base-image:linux_amd64",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+oci_image_index(
+    name = "index",
+    images = [
+        ":images",
+    ],
+    visibility = ["//visibility:public"],
+)
+
+oci_load(
+    name = "load",
+    image = ":image",
+    repo_tags = ["vinnybod/base-image:latest"],
+)
