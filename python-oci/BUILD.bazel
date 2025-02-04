@@ -1,56 +1,29 @@
 load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
 load("@aspect_rules_py//py:defs.bzl", "py_binary", "py_image_layer")
 load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_load")
-load("@rules_python//python/entry_points:py_console_script_binary.bzl", "py_console_script_binary")
-load("//python-multi-arch-with-base-image:transition.bzl", "multi_arch")
 
-# Build a py_binary for our python application
 py_binary(
     name = "main",
     srcs = ["main.py"],
+    # Adding this just makes it so that when running ./main
+    # I can test `import scapy` to see that the dep was properly
+    # added to the virtualenv
+    interpreter_options = ["-i"],
     deps = [
+        "@pypi//scapy",
     ],
 )
 
-# https://github.com/aspect-build/bazel-examples/blob/main/oci_python_image/hello_world/BUILD.bazel
 py_image_layer(
-    name = "layers",
-    binary = ":main",
+    name = "main_layers",
+    binary = "main",
 )
 
-# Build a py_binary for scapy
-py_console_script_binary(
-    name = "scapy",
-    binary_rule = py_binary,
-    pkg = "@pypi//scapy",
-)
-
-py_image_layer(
-    name = "scapy_layers",
-    binary = ":scapy",
-)
-
-#py_console_script_binary(
-#    name = "kafka",
-#    binary_rule = py_binary,
-#    pkg = "@pypi//confluent_kafka",
-#)
-#
-#py_image_layer(
-#    name = "kafka_layers",
-#    binary = ":kafka",
-#)
-
-# Build another multi-arch image on top of the base image
 oci_image(
     name = "image",
-    base = "//python-multi-arch-with-base-image/base-image:image",
-    entrypoint = ["//python-multi-arch-with-base-image/main"],
-    tars = [
-        ":layers",
-        ":scapy_layers",
-        #        ":kafka_layers",
-    ],
+    base = "@ubuntu",
+    entrypoint = ["/bin/bash"],
+    tars = [":main_layers"],
 )
 
 platform_transition_filegroup(
@@ -67,6 +40,8 @@ oci_load(
     image = ":platform_image",
     repo_tags = ["vinnybod/py-image:latest"],
 )
+
+# Platform setup
 
 platform(
     name = "linux_arm64",
