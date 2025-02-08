@@ -3,14 +3,8 @@ bazel_dep(name = "contrib_rules_jvm", version = "0.27.0")
 bazel_dep(name = "rules_java", version = "8.6.3")
 bazel_dep(name = "rules_oci", version = "2.2.0")
 bazel_dep(name = "aspect_bazel_lib", version = "2.9.4")
-bazel_dep(name = "aspect_rules_py", version = "1.1.0")
+bazel_dep(name = "aspect_rules_py", version = "1.3.1")
 bazel_dep(name = "rules_python", version = "1.1.0")
-
-git_override(
-    module_name = "aspect_rules_py",
-    commit = "7194656fd32027461266a1d63d36415cde3815a5",
-    remote = "https://github.com/vinnybod/rules_py",
-)
 
 python = use_extension("@rules_python//python/extensions:python.bzl", "python")
 python.toolchain(
