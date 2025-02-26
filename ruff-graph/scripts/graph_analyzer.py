@@ -3,7 +3,6 @@ import json
 from collections import deque
 import sys
 
-
 def get_downstream_dependents(dependents_map, changed_files):
     visited = set()
     queue = deque(changed_files)
@@ -16,7 +15,6 @@ def get_downstream_dependents(dependents_map, changed_files):
                 queue.append(neighbor)
 
     return visited
-
 
 def get_dependency_graph():
     res = subprocess.run(
@@ -37,4 +35,3 @@ if __name__ == "__main__":
         f"When {changed_files} changes, the downstream dependents are: {impacted_files}"
     )
     print(f"Test files that are impacted by these changes are: {impacted_test_files}")
-    print(f"Run pytest with the following command: pytest {' '.join(impacted_test_files)}")
