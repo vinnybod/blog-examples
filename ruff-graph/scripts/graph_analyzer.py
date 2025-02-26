@@ -31,7 +31,8 @@ if __name__ == "__main__":
     impacted_files = get_downstream_dependents(get_dependency_graph(), changed_files)
     impacted_test_files = [f for f in impacted_files if f.startswith(test_dir)]
 
-    print(
-        f"When {changed_files} changes, the downstream dependents are: {impacted_files}"
-    )
-    print(f"Test files that are impacted by these changes are: {impacted_test_files}")
+    # print(
+    #     f"When {changed_files} changes, the downstream dependents are: {impacted_files}"
+    # )
+    # print(f"Test files that are impacted by these changes are: {impacted_test_files}")
+    print(" ".join(impacted_test_files))
