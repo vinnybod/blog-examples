@@ -3,6 +3,7 @@ import json
 from collections import deque
 import sys
 
+
 def get_downstream_dependents(dependents_map, changed_files):
     visited = set()
     queue = deque(changed_files)
@@ -15,6 +16,7 @@ def get_downstream_dependents(dependents_map, changed_files):
                 queue.append(neighbor)
 
     return visited
+
 
 def get_dependency_graph():
     res = subprocess.run(
