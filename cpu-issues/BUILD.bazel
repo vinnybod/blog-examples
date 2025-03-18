@@ -1,0 +1,10 @@
+load("@rules_java//java:defs.bzl", "java_library")
+
+[
+    java_library(
+        name = "cpu_issues_" + str(i),
+        srcs = ["Main.java"],
+        visibility = ["//visibility:public"],
+    )
+    for i in range(1, 10000)
+]
