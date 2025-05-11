@@ -1,9 +1,24 @@
+load("@rules_java//java:defs.bzl", "java_binary", "java_library")
 load("@rules_jvm_external//private/rules:jvm_import.bzl", "jvm_import")
+
+java_library(
+    name = "empty_lib",
+    srcs = [],
+)
+
+java_binary(
+    name = "empty_bin",
+    main_class = "none",
+    runtime_deps = [":empty_lib"],
+)
 
 jvm_import(
     name = "my_guava",
-    # This is the jar we are swapping in!
-    jar = "@maven//:com/google/guava/guava/32.0.1-jre/guava-32.0.1-jre.jar",
+    # This is a jar copied into the workspace
+    jar = ":empty_lib.jar",
+    # This is a generated jar
+    # jar = ":empty_bin_deploy.jar",
+    # This is the original jar
     # jar = "@maven//:com/google/guava/guava/32.0.1-jre/guava-32.0.1-jre.jar",
     maven_coordinates = "com.google.guava:guava:32.0.1-jre",
     maven_url = "https://repo1.maven.org/maven2/com/google/guava/guava/32.0.1-jre/guava-32.0.1-jre.jar",
