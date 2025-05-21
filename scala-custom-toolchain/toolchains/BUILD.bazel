@@ -1,0 +1,29 @@
+load("@rules_scala//scala:scala.bzl", "setup_scala_toolchain")
+
+setup_scala_toolchain(
+    name = "my_toolchain",
+    # configure toolchain dependencies
+    parser_combinators_deps = [
+        "@maven//:org_scala_lang_modules_scala_parser_combinators_2_13",
+    ],
+    scala_compile_classpath = [
+        "@maven//:org_scala_lang_scala_compiler",
+        "@maven//:org_scala_lang_scala_library",
+        "@maven//:org_scala_lang_scala_reflect",
+    ],
+    scala_library_classpath = [
+        "@maven//:org_scala_lang_scala_library",
+        "@maven//:org_scala_lang_scala_reflect",
+    ],
+    scala_macro_classpath = [
+        "@maven//:org_scala_lang_scala_library",
+        "@maven//:org_scala_lang_scala_reflect",
+    ],
+    scala_xml_deps = [
+        "@maven//:org_scala_lang_modules_scala_xml_2_13",
+    ],
+    # example of setting attribute values
+    scalacopts = ["-Ywarn-unused"],
+    unused_dependency_checker_mode = "off",
+    visibility = ["//visibility:public"],
+)
