@@ -1,0 +1,101 @@
+{
+  "SPDXID": "SPDXRef-DOCUMENT",
+  "name": "sbom-sha256:3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6",
+  "spdxVersion": "SPDX-2.3",
+  "creationInfo": {
+    "created": "2025-07-16T14:51:28Z",
+    "creators": [
+      "Tool: apko (v0.29.6+dirty)",
+      "Organization: Chainguard, Inc"
+    ],
+    "licenseListVersion": "3.16"
+  },
+  "dataLicense": "CC0-1.0",
+  "documentNamespace": "https://spdx.org/spdxdocs/apko/",
+  "documentDescribes": [
+    "SPDXRef-Package-sha256-3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6"
+  ],
+  "packages": [
+    {
+      "SPDXID": "SPDXRef-Package-sha256-3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6",
+      "name": "sha256:3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6",
+      "versionInfo": "sha256:3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6",
+      "filesAnalyzed": false,
+      "description": "Multi-arch image index",
+      "downloadLocation": "NOASSERTION",
+      "supplier": "Organization: Chainguard, Inc.",
+      "sourceInfo": "Generated at image build time by apko",
+      "primaryPackagePurpose": "CONTAINER",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:oci/wolfi-base@sha256%3A3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6?mediaType=application%2Fvnd.oci.image.index.v1%2Bjson",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-sha256-897a059eba1db1535c2107c0ea1ef60382d1512afab4b21ad50acad11f0ecf9c",
+      "name": "sha256:897a059eba1db1535c2107c0ea1ef60382d1512afab4b21ad50acad11f0ecf9c",
+      "versionInfo": "sha256:897a059eba1db1535c2107c0ea1ef60382d1512afab4b21ad50acad11f0ecf9c",
+      "filesAnalyzed": false,
+      "downloadLocation": "NOASSERTION",
+      "supplier": "Organization: Chainguard, Inc.",
+      "primaryPackagePurpose": "CONTAINER",
+      "checksums": [
+        {
+          "algorithm": "SHA256",
+          "checksumValue": "897a059eba1db1535c2107c0ea1ef60382d1512afab4b21ad50acad11f0ecf9c"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:oci/wolfi-base@sha256%3A897a059eba1db1535c2107c0ea1ef60382d1512afab4b21ad50acad11f0ecf9c?arch=amd64\u0026mediaType=application%2Fvnd.oci.image.manifest.v1%2Bjson\u0026os=linux",
+          "referenceType": "purl"
+        }
+      ]
+    },
+    {
+      "SPDXID": "SPDXRef-Package-gitC43ssh-C47C47github.comC47vinnybodC47bazel-examples.gitC640104e11557cec6212aefe843d95d54c4ae724342",
+      "name": "github.com/vinnybod/bazel-examples.git",
+      "versionInfo": "0104e11557cec6212aefe843d95d54c4ae724342",
+      "filesAnalyzed": false,
+      "description": "Image configuration source",
+      "downloadLocation": "git+ssh://github.com/vinnybod/bazel-examples.git@0104e11557cec6212aefe843d95d54c4ae724342",
+      "supplier": "Organization: Chainguard, Inc.",
+      "primaryPackagePurpose": "SOURCE",
+      "checksums": [
+        {
+          "algorithm": "SHA1",
+          "checksumValue": "0104e11557cec6212aefe843d95d54c4ae724342"
+        }
+      ],
+      "externalRefs": [
+        {
+          "referenceCategory": "PACKAGE-MANAGER",
+          "referenceLocator": "pkg:github/vinnybod/bazel-examples@0104e11557cec6212aefe843d95d54c4ae724342",
+          "referenceType": "purl"
+        }
+      ]
+    }
+  ],
+  "relationships": [
+    {
+      "spdxElementId": "SPDXRef-Package-sha256-3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6",
+      "relationshipType": "VARIANT_OF",
+      "relatedSpdxElement": "SPDXRef-Package-sha256-897a059eba1db1535c2107c0ea1ef60382d1512afab4b21ad50acad11f0ecf9c"
+    },
+    {
+      "spdxElementId": "SPDXRef-Package-sha256-3f6b89432646853aed9f98ec19fa267f3d3251ab0198dcfae9f38d981c69d9d6",
+      "relationshipType": "GENERATED_FROM",
+      "relatedSpdxElement": "SPDXRef-Package-gitC43ssh-C47C47github.comC47vinnybodC47bazel-examples.gitC640104e11557cec6212aefe843d95d54c4ae724342"
+    }
+  ]
+}
