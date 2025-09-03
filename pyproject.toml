@@ -1,0 +1,11 @@
+[project]
+name = "bazel-examples"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "ruamel-yaml>=0.18.14",
+    "setuptools>=80.9.0",
+    "wheel>=0.45.1",
+]

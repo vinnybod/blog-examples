@@ -1,0 +1,7 @@
+load("@aspect_rules_py//py:defs.bzl", "py_library", "py_pytest_main", "py_test")
+
+py_library(
+    name = "main",
+    srcs = ["main.py"],
+    deps = ["@uv_lock_file_repo//deps:ruamel-yaml"],
+)
