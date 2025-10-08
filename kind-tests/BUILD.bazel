@@ -1,0 +1,105 @@
+load("@rules_gitops//gitops:defs.bzl", "k8s_deploy", "k8s_test_setup")
+load("@rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+load("@rules_oci//oci:defs.bzl", "oci_image", "oci_image_index", "oci_load", "oci_push")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+load(":transition.bzl", "multi_arch")
+load("@aspect_bazel_lib//lib:transitions.bzl", "platform_transition_filegroup")
+
+go_library(
+    name = "go_default_library",
+    srcs = ["helloworld.go"],
+    importpath = "github.com/fasterci/rules_gitops/examples/helloworld",
+    visibility = ["//visibility:private"],
+)
+
+go_test(
+    name = "go_default_test",
+    srcs = ["helloworld_test.go"],
+    embed = [":go_default_library"],
+)
+
+go_binary(
+    name = "helloworld",
+    embed = [":go_default_library"],
+    visibility = ["//visibility:public"],
+)
+
+pkg_tar(
+    name = "helloworld_tar",
+    srcs = [":helloworld"],
+    mode = "0755",
+    visibility = ["//visibility:public"],
+)
+
+oci_image(
+    name = "helloworld_image",
+    base = "@distroless_base",
+    entrypoint = ["/helloworld"],
+    tars = [":helloworld_tar"],
+)
+
+multi_arch(
+    name = "helloworld_image_multiarch",
+    image = ":helloworld_image",
+    platforms = [
+        "//:linux_x86_64_host",
+        "//:linux_aarch64_host",
+    ],
+)
+
+oci_image_index(
+    name = "helloworld_image_index",
+    images = [":helloworld_image_multiarch"],
+)
+
+platform_transition_filegroup(
+    name = "helloworld_image_filegroup",
+    srcs = [":helloworld_image"],
+    target_platform = select({
+        "//:host_x86_64": "//:linux_x86_64_host",
+        "//:host_arm64": "//:linux_aarch64_host",
+    }),
+)
+
+oci_load(
+    name = "helloworld_image.load",
+    image = "helloworld_image_filegroup",
+    repo_tags = ["helloworld:latest"],
+)
+
+k8s_deploy(
+    name = "mynamespace",
+    cluster = "kind-kind",
+    # Seems like a bug. If gitops is false, namespace is hardcoded
+    # https://github.com/fasterci/rules_gitops/blob/5c21bfb51d57a2ee192242f053c26845c0f67348/skylib/k8s.bzl#L174
+    gitops = True,
+    image_registry = "localhost:5000/docker/dev/confluentinc",
+    images = [":helloworld_image_index"],
+    manifests = glob([
+        "manifests/*.yaml",
+    ]),
+    namespace = "mynamespace",
+)
+
+k8s_test_setup(
+    name = "hello_server_it.setup",
+    cluster = "@k8s_test//:cluster",
+    kubeconfig = "@k8s_test//:kubeconfig",
+    kubectl = "@k8s_test//:kubectl",
+    objects = [
+        ":mynamespace",
+    ],
+)
+
+go_test(
+    name = "hello_server_it",
+    size = "large",
+    srcs = ["helloworld_it_test.go"],
+    args = [
+        "-setup",
+        "$(location :hello_server_it.setup)",
+    ],
+    data = [":hello_server_it.setup"],
+    rundir = ".",
+    deps = ["@rules_gitops//client:go_default_library"],
+)
