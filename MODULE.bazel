@@ -53,14 +53,14 @@ oci.pull(
 use_repo(oci, "distroless_base", "distroless_base_linux_amd64", "distroless_base_linux_arm64", "distroless_java")
 
 bazel_dep(name = "rules_gitops", version = "0.32.13")
-# git_override(
-#     module_name = "rules_gitops",
-#     commit = "5c21bfb51d57a2ee192242f053c26845c0f67348",
-#     remote = "https://github.com/fasterci/rules_gitops",
-# )
-local_path_override(
+git_override(
     module_name = "rules_gitops",
-    path = "/Users/vrose/dev/github.com/fasterci/rules_gitops"
+    commit = "5c21bfb51d57a2ee192242f053c26845c0f67348",
+    remote = "https://github.com/fasterci/rules_gitops",
+    patches = [
+        "//:rules_gitops.patch"
+    ],
+    patch_strip = 1,
 )
 
 kustomize = use_extension("@rules_gitops//gitops:extensions.bzl", "kustomize")

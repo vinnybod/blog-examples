@@ -1,0 +1,28 @@
+diff --git a/skylib/k8s.bzl b/skylib/k8s.bzl
+index b73201d..2066471 100644
+--- a/skylib/k8s.bzl
++++ b/skylib/k8s.bzl
+@@ -467,8 +467,8 @@ def _k8s_test_namespace_impl(ctx):
+     ctx.actions.expand_template(
+         template = ctx.file._namespace_template,
+         substitutions = {
+-            "%{kubeconfig}": ctx.file.kubeconfig.path,
+-            "%{kubectl}": ctx.file.kubectl.path,
++            "%{kubeconfig}": get_runfile_path(ctx, ctx.file.kubeconfig),
++            "%{kubectl}": get_runfile_path(ctx, ctx.file.kubectl),
+         },
+         output = namespace_create,
+         is_executable = True,
+@@ -544,9 +544,9 @@ def _k8s_test_setup_impl(ctx):
+         template = ctx.file._namespace_template,
+         substitutions = {
+             "%{it_sidecar}": ctx.executable._it_sidecar.short_path,
+-            "%{cluster}": ctx.file.cluster.path,
+-            "%{kubeconfig}": ctx.file.kubeconfig.path,
+-            "%{kubectl}": ctx.file.kubectl.path,
++            "%{cluster}": get_runfile_path(ctx, ctx.file.cluster),
++            "%{kubeconfig}": get_runfile_path(ctx, ctx.file.kubeconfig),
++            "%{kubectl}": get_runfile_path(ctx, ctx.file.kubectl),
+             "%{push_statements}": push_statements,
+             "%{set_namespace}": ctx.executable._set_namespace.short_path,
+             "%{it_manifest_filter}": ctx.executable._it_manifest_filter.short_path,
