@@ -1,0 +1,14 @@
+load("@contrib_rules_jvm//java:defs.bzl", "java_junit5_test")
+
+# bazel test //java:ExampleTest
+java_junit5_test(
+    name = "ExampleTest",
+    srcs = ["src/test/java/com/example/ExampleTest.java"],
+    test_class = "com.example.ExampleTest",
+    deps = [
+        "@maven//:org_junit_jupiter_junit_jupiter_api",
+        "@maven//:org_junit_jupiter_junit_jupiter_engine",
+        "@maven//:org_junit_platform_junit_platform_launcher",
+        "@maven//:org_junit_platform_junit_platform_reporting",
+    ],
+)
