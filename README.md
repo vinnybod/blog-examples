@@ -7,3 +7,4 @@ Most of the examples in this repository are based on the posts from my blog at [
 [Test Filtering with Ruff](./test-filtering-ruff)
 [Override Targets in rules_jvm_external](./rules-jvm-external-override)
 [Claude Musings - Per-Session Provider Swapping](./claude-musings/per-session-swapping)
+[Giving Claude a Second Opinion (cz delegation plugin)](./claude-musings/cz-delegation-plugin)
