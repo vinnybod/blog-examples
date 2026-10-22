@@ -1,0 +1,39 @@
+
+> @quartz-community/bases-page@1.0.0 check
+> npm run typecheck && npm run lint && npm run format && npm run test
+
+
+> @quartz-community/bases-page@1.0.0 typecheck
+> tsc --noEmit
+
+
+> @quartz-community/bases-page@1.0.0 lint
+> eslint . --max-warnings=0
+
+
+> @quartz-community/bases-page@1.0.0 format
+> prettier . --check
+
+Checking formatting...
+All matched files use Prettier code style!
+
+> @quartz-community/bases-page@1.0.0 test
+> vitest run
+
+
+ RUN  v2.1.9 bases-page
+
+ ✓ test/lexer.test.ts (10 tests) 4ms
+ ✓ test/cards.test.ts (16 tests) 4ms
+ ✓ test/cell.test.ts (34 tests) 6ms
+ ✓ test/compiler.test.ts (10 tests) 6ms
+ ✓ test/evaluate.test.ts (30 tests) 7ms
+ ✓ test/parser.test.ts (16 tests) 14ms
+ ✓ test/functions.test.ts (74 tests) 18ms
+ ✓ test/resolver.test.ts (31 tests) 27ms
+
+ Test Files  8 passed (8)
+      Tests  221 passed (221)
+   Start at  23:21:29
+   Duration  487ms (transform 465ms, setup 0ms, collect 1.06s, tests 84ms, environment 1ms, prepare 473ms)
+

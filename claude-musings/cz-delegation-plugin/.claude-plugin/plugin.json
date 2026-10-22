@@ -1,8 +1,0 @@
-{
-  "name": "cz",
-  "description": "Delegate reviews and questions to an alternate Claude instance (cz) running against the z.ai endpoint",
-  "version": "1.0.0",
-  "author": {
-    "name": "Vince Rose"
-  }
-}
